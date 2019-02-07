@@ -1,37 +1,20 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./App.css";
 
-import usePromise from "@aslan-hooks/use-promise";
+import styled from "styled-components";
+
+import useFetch from "@aslan-hooks/use-fetch";
 
 const App = () => {
-  const fetchPokemon = async () => {
-    const result = await fetch("https://pokeapi.co/api/v2/pokemon");
-    return result.json();
-  };
-
-  const [loading, result] = usePromise(fetchPokemon);
-
-  console.log("loading", loading);
-  console.log("result", result);
+  const [loading, result] = useFetch("https://pokeapi.co/api/v2/pokemon");
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ul>
+      {result &&
+        result.results.map(pokemon => (
+          <li key={pokemon.name}>{pokemon.name}</li>
+        ))}
+    </ul>
   );
 };
 
