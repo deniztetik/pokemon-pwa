@@ -9,6 +9,13 @@
   dependencies:
     "@aslan-hooks/use-promise" "^1.0.2"
 
+"@aslan-hooks/use-local-storage@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@aslan-hooks/use-local-storage/-/use-local-storage-1.1.0.tgz#33d3aaaadaa1f0a8887d2fe02306dd00677e2e81"
+  integrity sha512-r89zw2bd6kKZgqMJV+yXopotR/F0sDI5RvpOV3BXrVxneE01ro8g5WdkdcuhpJjTJ78tvkl4leiJNRnf2GQf/w==
+  dependencies:
+    react "^16.8.1"
+
 "@aslan-hooks/use-promise@^1.0.2":
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/@aslan-hooks/use-promise/-/use-promise-1.0.2.tgz#dcb1cdaad83acf0f8d5f2ff838a5c66583aa6703"
