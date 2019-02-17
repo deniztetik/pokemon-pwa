@@ -6,12 +6,12 @@ const useFetchPokemonList = latestPokemonToFetch => {
     "pokemon",
   );
 
-  const fetchPokemonFromAPI = async limit => {
+  const fetchPokemonListFromAPI = async limit => {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`);
     return await res.json();
   };
 
-  const fetchPokemon = async () => {
+  const fetchPokemonList = async () => {
     const latestPokemonInLocalStorage =
       pokemonFromLocalStorage &&
       pokemonFromLocalStorage.results.length >= latestPokemonToFetch;
@@ -19,14 +19,16 @@ const useFetchPokemonList = latestPokemonToFetch => {
     if (latestPokemonInLocalStorage) {
       return pokemonFromLocalStorage;
     } else {
-      const res = await fetchPokemonFromAPI(latestPokemonToFetch);
+      const res = await fetchPokemonListFromAPI(latestPokemonToFetch);
       //   TODO: put somewhere else... need to better isolate local storage...
       setPokemonInLocalStorage(res);
       return res;
     }
   };
 
-  const [loading, result] = usePromise(fetchPokemon, [latestPokemonToFetch]);
+  const [loading, result] = usePromise(fetchPokemonList, [
+    latestPokemonToFetch,
+  ]);
 
   return [loading, result];
 };
