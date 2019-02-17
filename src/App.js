@@ -32,10 +32,11 @@ const App = () => {
 
     const pokemonFromLocalStorage = getPokemonFromLocalStorage();
 
-    if (pokemonFromLocalStorage) {
-      if (pokemonFromLocalStorage.results.length >= latestPokemonToFetch) {
-        res = pokemonFromLocalStorage;
-      }
+    if (
+      pokemonFromLocalStorage &&
+      pokemonFromLocalStorage.results.length >= latestPokemonToFetch
+    ) {
+      res = pokemonFromLocalStorage;
     } else {
       res = await fetch(
         `https://pokeapi.co/api/v2/pokemon?limit=${latestPokemonToFetch}`,
