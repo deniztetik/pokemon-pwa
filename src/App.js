@@ -15,7 +15,7 @@ const PokemonWrapper = styled.div`
 `;
 
 const App = () => {
-  const [latestPokemonToFetch] = useState(151);
+  const [latestPokemonToFetch] = useState(251);
 
   const [loading, result] = useFetchPokemonList(latestPokemonToFetch);
 
