@@ -5,6 +5,7 @@
   "dependencies": {
     "@aslan-hooks/use-fetch": "1.0.0",
     "@aslan-hooks/use-local-storage": "^1.1.0",
+    "@aslan-hooks/use-promise": "^1.0.2",
     "lodash": "^4.17.11",
     "react": "^16.8.1",
     "react-dom": "^16.8.1",
