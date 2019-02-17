@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 
 import styled from "styled-components";
@@ -15,7 +15,7 @@ const PokemonWrapper = styled.div`
 `;
 
 const App = () => {
-  const [latestPokemonToFetch, setLatestPokemonToFetch] = useState(151);
+  const [latestPokemonToFetch] = useState(151);
 
   const [loading, result] = useFetchPokemonList(latestPokemonToFetch);
 

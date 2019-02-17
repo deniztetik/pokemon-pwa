@@ -8,7 +8,6 @@ import "styled-components/macro";
 
 import capitalize from "lodash/capitalize";
 
-import useFetch from "@aslan-hooks/use-fetch";
 import useFetchPokemon from "./effects/useFetchPokemon";
 
 // const useIntersection = options => {
