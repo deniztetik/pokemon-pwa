@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import Pokemon from "./Pokemon";
 
-import useFetchPokemon from "./effects/useFetchPokemon";
+import useFetchPokemonList from "./effects/useFetchPokemonList";
 
 const PokemonWrapper = styled.div`
   display: flex;
@@ -17,7 +17,7 @@ const PokemonWrapper = styled.div`
 const App = () => {
   const [latestPokemonToFetch, setLatestPokemonToFetch] = useState(151);
 
-  const [loading, result] = useFetchPokemon(latestPokemonToFetch);
+  const [loading, result] = useFetchPokemonList(latestPokemonToFetch);
 
   return (
     <>

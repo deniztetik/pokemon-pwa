@@ -1,7 +1,7 @@
 import useLocalStorage from "@aslan-hooks/use-local-storage";
 import usePromise from "@aslan-hooks/use-promise";
 
-const useFetchPokemon = latestPokemonToFetch => {
+const useFetchPokemonList = latestPokemonToFetch => {
   const [pokemonFromLocalStorage, setPokemonInLocalStorage] = useLocalStorage(
     "pokemon",
   );
@@ -31,4 +31,4 @@ const useFetchPokemon = latestPokemonToFetch => {
   return [loading, result];
 };
 
-export default useFetchPokemon;
+export default useFetchPokemonList;
