@@ -9,6 +9,7 @@ import "styled-components/macro";
 import capitalize from "lodash/capitalize";
 
 import useFetch from "@aslan-hooks/use-fetch";
+import useFetchPokemon from "./effects/useFetchPokemon";
 
 // const useIntersection = options => {
 //   const [observerEntry, setEntry] = useState({});
@@ -26,9 +27,7 @@ import useFetch from "@aslan-hooks/use-fetch";
 // };
 
 const Pokemon = ({ name }) => {
-  const [loading, pokemonInfo] = useFetch(
-    `https://pokeapi.co/api/v2/pokemon/${name}/`,
-  );
+  const [loading, pokemonInfo] = useFetchPokemon(name);
 
   const imgSrc = pokemonInfo ? pokemonInfo.sprites.front_default : null;
   const pokeNum = pokemonInfo ? `#${pokemonInfo.id}` : "";

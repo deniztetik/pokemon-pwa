@@ -27,7 +27,7 @@ const useFetchPokemonList = latestPokemonToFetch => {
   };
 
   const [loading, result] = usePromise(fetchPokemonList, [
-    latestPokemonToFetch,
+    pokemonFromLocalStorage,
   ]);
 
   return [loading, result];
