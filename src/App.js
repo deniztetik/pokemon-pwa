@@ -6,6 +6,7 @@ import styled from "styled-components";
 import useLocalStorage from "@aslan-hooks/use-local-storage";
 
 import Pokemon from "./Pokemon";
+import useFetch from "@aslan-hooks/use-fetch";
 
 const PokemonWrapper = styled.div`
   display: flex;
@@ -14,34 +15,31 @@ const PokemonWrapper = styled.div`
   justify-content: center;
 `;
 
-const getPokemonFromLocalStorage = () =>
-  JSON.parse(window.localStorage.getItem("pokemon"));
+const useFetchPokemon = (latestPokemonToFetch, setLoading, setResult) => {
+  const getPokemonFromLocalStorage = () =>
+    JSON.parse(window.localStorage.getItem("pokemon"));
 
-const setPokemonInLocalStorage = pokemon =>
-  window.localStorage.setItem("pokemon", JSON.stringify(pokemon));
+  const setPokemonInLocalStorage = pokemon =>
+    window.localStorage.setItem("pokemon", JSON.stringify(pokemon));
 
-const App = () => {
-  const [loading, setLoading] = useState(true);
-  const [result, setResult] = useState(null);
+  const fetchPokemonFromAPI = async limit => {
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon?limit=${limit}`);
+    return await res.json();
+  };
 
-  const [latestPokemonToFetch, setLatestPokemonToFetch] = useState(151);
-
-  const fetchPokemon = async latestPokemonToFetch => {
+  const fetchPokemon = async () => {
     let res;
     setLoading(true);
 
     const pokemonFromLocalStorage = getPokemonFromLocalStorage();
-
-    if (
+    const latestPokemonInLocalStorage =
       pokemonFromLocalStorage &&
-      pokemonFromLocalStorage.results.length >= latestPokemonToFetch
-    ) {
+      pokemonFromLocalStorage.results.length >= latestPokemonToFetch;
+
+    if (latestPokemonInLocalStorage) {
       res = pokemonFromLocalStorage;
     } else {
-      res = await fetch(
-        `https://pokeapi.co/api/v2/pokemon?limit=${latestPokemonToFetch}`,
-      );
-      res = await res.json();
+      res = await fetchPokemonFromAPI(latestPokemonToFetch);
       setPokemonInLocalStorage(res);
     }
 
@@ -50,8 +48,17 @@ const App = () => {
   };
 
   useEffect(() => {
-    fetchPokemon(latestPokemonToFetch);
-  }, []);
+    fetchPokemon(latestPokemonToFetch, setLoading, setResult);
+  }, [latestPokemonToFetch]);
+};
+
+const App = () => {
+  const [loading, setLoading] = useState(true);
+  const [result, setResult] = useState(null);
+
+  const [latestPokemonToFetch, setLatestPokemonToFetch] = useState(151);
+
+  useFetchPokemon(latestPokemonToFetch, setLoading, setResult);
 
   return (
     <>
