@@ -15,7 +15,7 @@ const Pokemon = ({ name }) => {
   const pokeNum = pokemonInfo ? `#${pokemonInfo.id}` : "";
 
   return (
-    <div css="margin: 20px">
+    <div className="pokemon" css="margin: 20px">
       {loading ? (
         <Loader type="Grid" color="grey" height={125} width={125} />
       ) : (
