@@ -18,13 +18,11 @@ import "./App.css";
 import styled, { createGlobalStyle } from "styled-components";
 import "styled-components/macro";
 
-import { Grommet, Box, TextInput } from "grommet";
+import { Grommet, Box, TextInput, InfiniteScroll } from "grommet";
 
 import Pokemon from "./Pokemon";
 
-import useFetchPokemonList from "./effects/useFetchPokemonList";
-
-const POKEMON_COUNT = 807;
+import useFetchPokemonList from "./effects/useFetchPokemonNew";
 
 const PokemonWrapper = styled.div`
   display: flex;
@@ -46,22 +44,6 @@ const App = () => {
 
   const [loading, result] = useFetchPokemonList(latestPokemonToFetch);
 
-  const handleScroll = e => {
-    const lastPokemonEl = document.querySelector(
-      ".pokemon-wrapper > .pokemon:last-child",
-    );
-    const lastPokemonElOffset =
-      lastPokemonEl.offsetTop + lastPokemonEl.clientHeight;
-    const pageOffset = window.pageYOffset + window.innerHeight;
-    if (pageOffset > lastPokemonElOffset) {
-      if (POKEMON_COUNT - latestPokemonToFetch <= 20) {
-        setLatestPokemonToFetch(POKEMON_COUNT);
-      } else {
-        setLatestPokemonToFetch(latestPokemonToFetch + 20);
-      }
-    }
-  };
-
   const onInputChange = e => {
     const value = e.target.value;
     setInputExpr(new RegExp(value, "g"));
@@ -71,16 +53,18 @@ const App = () => {
     if (!result) {
       return null;
     }
-    return result.results
-      .filter(pokemon => pokemon.name.match(inputExpr))
-      .map(pokemon => <Pokemon key={pokemon.name} name={pokemon.name} />);
+    const filteredPokemon = result.filter(pokemon =>
+      pokemon.name.match(inputExpr),
+    );
+
+    return (
+      <InfiniteScroll items={filteredPokemon}>
+        {pokemon => {
+          return <Pokemon key={pokemon.name} name={pokemon.name} />;
+        }}
+      </InfiniteScroll>
+    );
   };
-
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [latestPokemonToFetch]);
 
   return (
     <Grommet>
