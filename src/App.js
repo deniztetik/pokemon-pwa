@@ -62,11 +62,10 @@ const App = () => {
     }
   };
 
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [latestPokemonToFetch]);
+  const onInputChange = e => {
+    const value = e.target.value;
+    setInputExpr(new RegExp(value, "g"));
+  };
 
   const renderPokemon = () => {
     if (!result) {
@@ -76,6 +75,12 @@ const App = () => {
       .filter(pokemon => pokemon.name.match(inputExpr))
       .map(pokemon => <Pokemon key={pokemon.name} name={pokemon.name} />);
   };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [latestPokemonToFetch]);
 
   return (
     <Grommet>
@@ -89,7 +94,7 @@ const App = () => {
               css={`
                 background: white;
               `}
-              onChange={e => setInputExpr(new RegExp(e.target.value, "g"))}
+              onChange={onInputChange}
             />
           </Box>
           <PokemonWrapper className="pokemon-wrapper">
