@@ -15,7 +15,10 @@ TODO:
 import React, { useState, useEffect } from "react";
 import "./App.css";
 
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
+import "styled-components/macro";
+
+import { Grommet, Box, TextInput } from "grommet";
 
 import Pokemon from "./Pokemon";
 
@@ -30,10 +33,14 @@ const PokemonWrapper = styled.div`
   justify-content: center;
 `;
 
+const GlobalStyle = createGlobalStyle`
+  body {
+    background: #e3350d;
+  }
+`;
+
 const App = () => {
-  const pokemonFromLocalStorage = JSON.parse(
-    window.localStorage.getItem("pokemon"),
-  );
+  const [inputExpr, setInputExpr] = useState("[^]*");
 
   const [latestPokemonToFetch, setLatestPokemonToFetch] = useState(20);
 
@@ -61,21 +68,36 @@ const App = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, [latestPokemonToFetch]);
 
+  const renderPokemon = () => {
+    if (!result) {
+      return null;
+    }
+    return result.results
+      .filter(pokemon => pokemon.name.match(inputExpr))
+      .map(pokemon => <Pokemon key={pokemon.name} name={pokemon.name} />);
+  };
+
   return (
-    <>
+    <Grommet>
+      <GlobalStyle />
       {loading ? (
         <div>Loading</div>
       ) : (
-        <>
+        <Box align="center">
+          <Box width="medium">
+            <TextInput
+              css={`
+                background: white;
+              `}
+              onChange={e => setInputExpr(new RegExp(e.target.value, "g"))}
+            />
+          </Box>
           <PokemonWrapper className="pokemon-wrapper">
-            {result &&
-              result.results.map(pokemon => (
-                <Pokemon key={pokemon.name} name={pokemon.name} />
-              ))}
+            {renderPokemon()}
           </PokemonWrapper>
-        </>
+        </Box>
       )}
-    </>
+    </Grommet>
   );
 };
 
