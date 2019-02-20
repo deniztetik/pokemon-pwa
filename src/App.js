@@ -9,6 +9,7 @@ TODO:
 2. Style page properly 
 3. Create page covering information on the Pokemon
 4. Create process to basically download all the data for the app 
+5. Fix structure of object.
 */
 
 import React, { useState, useEffect } from "react";
@@ -34,9 +35,7 @@ const App = () => {
     window.localStorage.getItem("pokemon"),
   );
 
-  const [latestPokemonToFetch, setLatestPokemonToFetch] = useState(
-    pokemonFromLocalStorage ? pokemonFromLocalStorage.results.length : 25,
-  );
+  const [latestPokemonToFetch, setLatestPokemonToFetch] = useState(20);
 
   const [loading, result] = useFetchPokemonList(latestPokemonToFetch);
 
@@ -48,10 +47,10 @@ const App = () => {
       lastPokemonEl.offsetTop + lastPokemonEl.clientHeight;
     const pageOffset = window.pageYOffset + window.innerHeight;
     if (pageOffset > lastPokemonElOffset) {
-      if (POKEMON_COUNT - latestPokemonToFetch <= 25) {
+      if (POKEMON_COUNT - latestPokemonToFetch <= 20) {
         setLatestPokemonToFetch(POKEMON_COUNT);
       } else {
-        setLatestPokemonToFetch(latestPokemonToFetch + 25);
+        setLatestPokemonToFetch(latestPokemonToFetch + 20);
       }
     }
   };
