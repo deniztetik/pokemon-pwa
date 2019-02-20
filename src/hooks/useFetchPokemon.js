@@ -13,13 +13,6 @@ const useFetchPokemon = () => {
       : null,
   );
 
-  const fetchPokemonListFromAPI = async () => {
-    const res = await fetch(
-      `https://pokeapi.co/api/v2/pokemon?limit=${POKEMON_LIMIT}`,
-    );
-    return await res.json();
-  };
-
   const buildFetchPokemonDetailsPromise = async pokemonNo => {
     const pokemonDetailsRes = await fetch(
       `https://pokeapi.co/api/v2/pokemon/${pokemonNo}/`,

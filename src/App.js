@@ -12,7 +12,7 @@ TODO:
 5. Fix structure of object.
 */
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./App.css";
 
 import styled, { createGlobalStyle } from "styled-components";
@@ -22,7 +22,8 @@ import { Grommet, Box, TextInput, InfiniteScroll } from "grommet";
 
 import Pokemon from "./Pokemon";
 
-import useFetchPokemonList from "./effects/useFetchPokemonNew";
+import useFetchPokemon from "./hooks/useFetchPokemon";
+import useDebounce from "./hooks/useDebounce";
 
 const PokemonWrapper = styled.div`
   display: flex;
@@ -34,15 +35,16 @@ const PokemonWrapper = styled.div`
 const GlobalStyle = createGlobalStyle`
   body {
     background: #e3350d;
+    user-select: none;
   }
 `;
 
 const App = () => {
   const [inputExpr, setInputExpr] = useState("[^]*");
 
-  const [latestPokemonToFetch, setLatestPokemonToFetch] = useState(20);
+  const [loading, result] = useFetchPokemon();
 
-  const [loading, result] = useFetchPokemonList(latestPokemonToFetch);
+  const debouncedInputExpr = useDebounce(inputExpr, 1000);
 
   const onInputChange = e => {
     const value = e.target.value;
@@ -54,13 +56,20 @@ const App = () => {
       return null;
     }
     const filteredPokemon = result.filter(pokemon =>
-      pokemon.name.match(inputExpr),
+      pokemon.name.match(debouncedInputExpr),
     );
 
     return (
       <InfiniteScroll items={filteredPokemon}>
         {pokemon => {
-          return <Pokemon key={pokemon.name} name={pokemon.name} />;
+          return (
+            <Pokemon
+              key={pokemon.name}
+              name={pokemon.name}
+              sprite={pokemon.sprites.front_default}
+              id={pokemon.id}
+            />
+          );
         }}
       </InfiniteScroll>
     );
