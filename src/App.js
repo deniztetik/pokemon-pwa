@@ -32,22 +32,24 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App = () => {
-  const [inputExpr, setInputExpr] = useState("[^]*");
+  const [input, setInput] = useState("");
 
   const [loading, result] = useFetchPokemon();
 
-  const debouncedInputExpr = useDebounce(inputExpr, 1000);
-
-  const onInputChange = e => {
-    const value = e.target.value;
-    setInputExpr(new RegExp(value, "gi"));
-  };
+  const debouncedInput = useDebounce(input, 1000);
 
   const renderPokemon = () => {
     if (!result) {
       return null;
     }
-    const filteredPokemon = result.filter(pokemon => pokemon.name.match(debouncedInputExpr));
+
+    const filteredPokemon = result.filter(pokemon => {
+      if (debouncedInput === "") return true;
+      return (
+        pokemon.name.match(new RegExp(debouncedInput, "gi")) ||
+        pokemon.nationalNo === Number(debouncedInput)
+      );
+    });
 
     return (
       <InfiniteScroll items={filteredPokemon}>
@@ -79,7 +81,7 @@ const App = () => {
                 css={`
                   background: white;
                 `}
-                onChange={onInputChange}
+                onChange={e => setInput(e.target.value)}
               />
             </Box>
             <PokemonWrapper className="pokemon-wrapper">{renderPokemon()}</PokemonWrapper>
