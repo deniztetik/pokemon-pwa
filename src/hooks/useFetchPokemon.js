@@ -18,7 +18,9 @@ const useFetchPokemon = () => {
       buildFetchPokemonDetailsPromise(pokemonNo),
     );
     const pokemon = await Promise.all(pokemonPromises);
-    return pokemon.map(pokeman => (({ id, name, sprites }) => ({ id, name, sprites }))(pokeman));
+    return pokemon.map(pokeman =>
+      (({ id, species, sprites }) => ({ id, species, sprites }))(pokeman),
+    );
   };
 
   const renameKeys = pokemen =>
@@ -26,8 +28,10 @@ const useFetchPokemon = () => {
       const newPokemon = { ...pokemon };
       newPokemon.nationalNo = newPokemon.id;
       newPokemon.spriteUrl = newPokemon.sprites.front_default;
+      newPokemon.name = newPokemon.species.name;
       delete newPokemon.id;
       delete newPokemon.sprites;
+      delete newPokemon.species;
       return newPokemon;
     });
 
