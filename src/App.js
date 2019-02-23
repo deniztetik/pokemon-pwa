@@ -76,10 +76,11 @@ const App = () => {
           <div>Loading</div>
         ) : (
           <>
-            <Box width="medium">
+            <Box width="small" css="margin: 20px">
               <TextInput
                 css={`
                   background: white;
+                  opacity: 0.5;
                 `}
                 onChange={e => setInput(e.target.value)}
               />
