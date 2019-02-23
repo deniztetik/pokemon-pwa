@@ -9,10 +9,10 @@ import capitalize from "lodash/capitalize";
 const Pokemon = ({ name, sprite, id }) => (
   <Box
     className="pokemon"
-    css="margin: 20px"
-    pad="large"
+    css="margin: 10px"
+    pad="medium"
     align="center"
-    background={{ color: "light-2", opacity: "strong" }}
+    background={{ color: "light-2", opacity: "medium" }}
     round
     gap="small"
   >
