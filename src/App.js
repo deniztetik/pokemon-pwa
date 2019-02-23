@@ -1,15 +1,7 @@
 /* 
 TODO:
-1. Progressively render new elements as you scroll down
-   a. PROBLEM --> how to set new Pokemon to be fetched
-    i. Respecting BOTH localStorage and fetch 
-      (i.e. don't refetch new Pokemon that are already in local storage, ONLY fetch the new ones)
-      - Right now (a) there isn't a way to set the new amount of Pokemon and have that cycle through the app
-        and (b) there isn't a way to prioritize local storage over data over new data if SOME of it is in local storage
-2. Style page properly 
-3. Create page covering information on the Pokemon
-4. Create process to basically download all the data for the app 
-5. Fix structure of object.
+1. Store images in db
+2. Create page covering information on the Pokemon
 */
 
 import React, { useState } from "react";
@@ -18,7 +10,7 @@ import "./App.css";
 import styled, { createGlobalStyle } from "styled-components";
 import "styled-components/macro";
 
-import { Grommet, Box, TextInput, InfiniteScroll } from "grommet";
+import { Grommet, Box, TextInput, InfiniteScroll, Heading } from "grommet";
 
 import Pokemon from "./Pokemon";
 
@@ -34,7 +26,7 @@ const PokemonWrapper = styled.div`
 
 const GlobalStyle = createGlobalStyle`
   body {
-    background: #e3350d;
+    background: #00739D;
     user-select: none;
   }
 `;
@@ -48,16 +40,14 @@ const App = () => {
 
   const onInputChange = e => {
     const value = e.target.value;
-    setInputExpr(new RegExp(value, "g"));
+    setInputExpr(new RegExp(value, "gi"));
   };
 
   const renderPokemon = () => {
     if (!result) {
       return null;
     }
-    const filteredPokemon = result.filter(pokemon =>
-      pokemon.name.match(debouncedInputExpr),
-    );
+    const filteredPokemon = result.filter(pokemon => pokemon.name.match(debouncedInputExpr));
 
     return (
       <InfiniteScroll items={filteredPokemon}>
@@ -66,7 +56,7 @@ const App = () => {
             <Pokemon
               key={pokemon.name}
               name={pokemon.name}
-              sprite={pokemon.sprites.front_default}
+              sprite={pokemon.spriteUrl}
               id={pokemon.id}
             />
           );
@@ -78,23 +68,24 @@ const App = () => {
   return (
     <Grommet>
       <GlobalStyle />
-      {loading ? (
-        <div>Loading</div>
-      ) : (
-        <Box align="center">
-          <Box width="medium">
-            <TextInput
-              css={`
-                background: white;
-              `}
-              onChange={onInputChange}
-            />
-          </Box>
-          <PokemonWrapper className="pokemon-wrapper">
-            {renderPokemon()}
-          </PokemonWrapper>
-        </Box>
-      )}
+      <Box align="center">
+        <Heading margin="none">Pokedex</Heading>
+        {loading ? (
+          <div>Loading</div>
+        ) : (
+          <>
+            <Box width="medium">
+              <TextInput
+                css={`
+                  background: white;
+                `}
+                onChange={onInputChange}
+              />
+            </Box>
+            <PokemonWrapper className="pokemon-wrapper">{renderPokemon()}</PokemonWrapper>
+          </>
+        )}
+      </Box>
     </Grommet>
   );
 };

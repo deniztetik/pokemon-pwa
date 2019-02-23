@@ -1,22 +1,14 @@
 import usePromise from "@aslan-hooks/use-promise";
-import useLocalStorage from "@aslan-hooks/use-local-storage";
 
 import range from "lodash/range";
+
+import db from "../db";
 
 const POKEMON_LIMIT = 807;
 
 const useFetchPokemon = () => {
-  const [pokemonLocalStorage, setPokemonLocalStorage] = useLocalStorage(
-    "pokemon",
-    window.localStorage.pokemon
-      ? JSON.parse(window.localStorage.pokemon)
-      : null,
-  );
-
   const buildFetchPokemonDetailsPromise = async pokemonNo => {
-    const pokemonDetailsRes = await fetch(
-      `https://pokeapi.co/api/v2/pokemon/${pokemonNo}/`,
-    );
+    const pokemonDetailsRes = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonNo}/`);
 
     return await pokemonDetailsRes.json();
   };
@@ -26,17 +18,30 @@ const useFetchPokemon = () => {
       buildFetchPokemonDetailsPromise(pokemonNo),
     );
     const pokemon = await Promise.all(pokemonPromises);
-    return pokemon.map(pokeman =>
-      (({ id, name, sprites }) => ({ id, name, sprites }))(pokeman),
-    );
+    return pokemon.map(pokeman => (({ id, name, sprites }) => ({ id, name, sprites }))(pokeman));
   };
 
+  const renameKeys = pokemen =>
+    pokemen.map(pokemon => {
+      const newPokemon = { ...pokemon };
+      newPokemon.nationalNo = newPokemon.id;
+      newPokemon.spriteUrl = newPokemon.sprites.front_default;
+      delete newPokemon.id;
+      delete newPokemon.sprites;
+      return newPokemon;
+    });
+
   const main = async () => {
-    const pokemon = pokemonLocalStorage
-      ? pokemonLocalStorage
-      : await fetchPokemonList();
-    setPokemonLocalStorage(pokemon);
-    return pokemon;
+    const pokemonInDb = await db.table("pokemon");
+
+    if ((await pokemonInDb.count()) === 0) {
+      let pokemen = await fetchPokemonList();
+      pokemen = renameKeys(pokemen);
+
+      await db.pokemon.bulkAdd(pokemen);
+    }
+
+    return await db.table("pokemon").toArray();
   };
 
   const [loading, result] = usePromise(main);
