@@ -2,17 +2,10 @@
 # yarn lockfile v1
 
 
-"@aslan-hooks/use-fetch@1.0.0":
+"@aslan-hooks/use-debounce@^1.0.0":
   version "1.0.0"
-  resolved "https://registry.yarnpkg.com/@aslan-hooks/use-fetch/-/use-fetch-1.0.0.tgz#bc592bb9a1d2f3fa7aa315b2b7059a6da8969eea"
-  integrity sha512-Q9AaVrObDb8OHhSmG+e6Jkfyz7JybAW7D5jMAjK4cuFYPlocMRJlIgSYGcU9/VeXFKAlWorL+j5IroWL8VuuMw==
-  dependencies:
-    "@aslan-hooks/use-promise" "^1.0.2"
-
-"@aslan-hooks/use-local-storage@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@aslan-hooks/use-local-storage/-/use-local-storage-1.1.1.tgz#3e3515fbd9813bb686f046bb5d1d15f1efbc986b"
-  integrity sha512-11EmZrATwJqOEUwlXKOVQLEytPXB95C61USx/I8t7+K59NaVLAErB6ETkM8j2eoyyW3myASZGZSoxUSdpgFldQ==
+  resolved "https://registry.yarnpkg.com/@aslan-hooks/use-debounce/-/use-debounce-1.0.0.tgz#671268e6f5dc28de1ff60159101d202ce3079117"
+  integrity sha512-y98LisgZRe149eXYDfC/wu0GkugdUEWjnfV6m7RQGFwk6FWApJlba6da/CsfRSTmpG/IOQKFGIh/t2RM1HztMA==
   dependencies:
     react "^16.8.1"
 

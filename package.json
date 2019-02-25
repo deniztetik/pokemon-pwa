@@ -3,8 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@aslan-hooks/use-fetch": "1.0.0",
-    "@aslan-hooks/use-local-storage": "^1.1.1",
+    "@aslan-hooks/use-debounce": "^1.0.0",
     "@aslan-hooks/use-promise": "^1.0.2",
     "dexie": "^2.0.4",
     "grommet": "^2.4.0",

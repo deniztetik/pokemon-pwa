@@ -5,17 +5,17 @@ TODO:
 */
 
 import React, { useState } from "react";
-import "./App.css";
 
 import styled, { createGlobalStyle } from "styled-components";
 import "styled-components/macro";
 
 import { Grommet, Box, TextInput, InfiniteScroll, Heading } from "grommet";
 
+import useDebounce from "@aslan-hooks/use-debounce";
+
 import Pokemon from "./Pokemon";
 
 import useFetchPokemon from "./hooks/useFetchPokemon";
-import useDebounce from "./hooks/useDebounce";
 
 const PokemonWrapper = styled.div`
   display: flex;
@@ -53,16 +53,14 @@ const App = () => {
 
     return (
       <InfiniteScroll items={filteredPokemon}>
-        {pokemon => {
-          return (
-            <Pokemon
-              key={pokemon.name}
-              name={pokemon.name}
-              sprite={pokemon.spriteUrl}
-              id={pokemon.id}
-            />
-          );
-        }}
+        {pokemon => (
+          <Pokemon
+            key={pokemon.name}
+            name={pokemon.name}
+            sprite={pokemon.spriteUrl}
+            id={pokemon.id}
+          />
+        )}
       </InfiniteScroll>
     );
   };
