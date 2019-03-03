@@ -4,16 +4,18 @@ TODO:
 2. Create page covering information on the Pokemon
 */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import styled, { createGlobalStyle } from "styled-components";
 import "styled-components/macro";
 
 import { Grommet, Box, TextInput, InfiniteScroll, Heading } from "grommet";
+import Modal from "react-modal";
 
 import useDebounce from "@aslan-hooks/use-debounce";
 
 import Pokemon from "./Pokemon";
+import PokemonDetails from "./PokemonDetails";
 
 import useFetchPokemon from "./hooks/useFetchPokemon";
 
@@ -31,12 +33,45 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const customModalStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+  },
+};
+
+const onAfterOpen = () => {
+  window.document.getElementsByTagName("body")[0].style.overflow = "hidden";
+};
+
+const onAfterClose = () => {
+  window.document.getElementsByTagName("body")[0].style.overflow = "";
+};
+
+Modal.setAppElement("#root");
+
 const App = () => {
   const [input, setInput] = useState("");
+  const [modalOpen, setModalOpen] = useState(false);
+  const [selectedPokemonNo, setSelectedPokemonNo] = useState(null);
 
   const [loading, result] = useFetchPokemon();
 
   const debouncedInput = useDebounce(input, 1000);
+
+  const openModal = nationalNo => {
+    setSelectedPokemonNo(nationalNo);
+    setModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setSelectedPokemonNo(null);
+    setModalOpen(false);
+  };
 
   const renderPokemon = () => {
     if (!result) {
@@ -55,6 +90,7 @@ const App = () => {
       <InfiniteScroll items={filteredPokemon}>
         {pokemon => (
           <Pokemon
+            onClick={() => openModal(pokemon.id)}
             key={pokemon.name}
             name={pokemon.name}
             sprite={pokemon.spriteUrl}
@@ -64,6 +100,18 @@ const App = () => {
       </InfiniteScroll>
     );
   };
+
+  useEffect(() => {
+    const setModalOpenIfEscape = e => {
+      if (e.key === "Escape" && modalOpen) {
+        closeModal();
+      }
+    };
+
+    document.addEventListener("keydown", setModalOpenIfEscape);
+
+    return () => document.removeEventListener("keydown", setModalOpenIfEscape);
+  }, [modalOpen]);
 
   return (
     <Grommet>
@@ -84,6 +132,14 @@ const App = () => {
               />
             </Box>
             <PokemonWrapper className="pokemon-wrapper">{renderPokemon()}</PokemonWrapper>
+            <Modal
+              isOpen={modalOpen}
+              onAfterOpen={onAfterOpen}
+              onAfterClose={onAfterClose}
+              style={customModalStyles}
+            >
+              <PokemonDetails nationalNo={selectedPokemonNo} />
+            </Modal>
           </>
         )}
       </Box>
