@@ -1,4 +1,5 @@
-import usePromise from "@aslan-hooks/use-promise";
+// import usePromise from "@aslan-hooks/use-promise";
+import usePromise from "../util/usePromise";
 
 import range from "lodash/range";
 
@@ -7,7 +8,7 @@ import db from "../db";
 const POKEMON_LIMIT = 807;
 
 const useFetchPokemon = () => {
-  const buildFetchPokemonDetailsPromise = async pokemonNo => {
+  const buildFetchPokemonDetailsPromise = async (pokemonNo: number) => {
     const pokemonDetailsRes = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonNo}/`);
 
     return await pokemonDetailsRes.json();
@@ -23,8 +24,8 @@ const useFetchPokemon = () => {
     );
   };
 
-  const renameKeys = pokemen =>
-    pokemen.map(pokemon => {
+  const renameKeys = (pokemen: Array<any>) =>
+    pokemen.map((pokemon: any) => {
       const newPokemon = { ...pokemon };
       newPokemon.nationalNo = newPokemon.id;
       newPokemon.spriteUrl = newPokemon.sprites.front_default;
@@ -42,7 +43,8 @@ const useFetchPokemon = () => {
       let pokemen = await fetchPokemonList();
       pokemen = renameKeys(pokemen);
 
-      await db.pokemon.bulkAdd(pokemen);
+      // await db.pokemon.bulkAdd(pokemen);
+      await pokemonInDb.bulkAdd(pokemen);
     }
 
     return await db.table("pokemon").toArray();

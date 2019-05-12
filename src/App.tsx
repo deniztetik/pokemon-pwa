@@ -1,18 +1,21 @@
 /* 
 TODO:
 1. Store images in db
-2. Create page covering information on the Pokemon
+2. Update modal covering information on the Pokemon
+3. Fix scroll issue when wide screen so 
 */
 
 import React, { useState, useEffect } from "react";
 
 import styled, { createGlobalStyle } from "styled-components";
 import "styled-components/macro";
+import * as types from "styled-components/cssprop";
 
 import { Grommet, Box, TextInput, InfiniteScroll, Heading } from "grommet";
 import Modal from "react-modal";
 
-import useDebounce from "@aslan-hooks/use-debounce";
+// import useDebounce from "@aslan-hooks/use-debounce";
+import useDebounce from "./util/useDebounce";
 
 import Pokemon from "./Pokemon";
 import PokemonDetails from "./PokemonDetails";
@@ -44,6 +47,11 @@ const customModalStyles = {
   },
 };
 
+type Pokemon = {
+  name: string;
+  nationalNo: number;
+};
+
 const onAfterOpen = () => {
   window.document.getElementsByTagName("body")[0].style.overflow = "hidden";
 };
@@ -57,13 +65,13 @@ Modal.setAppElement("#root");
 const App = () => {
   const [input, setInput] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedPokemonNo, setSelectedPokemonNo] = useState(null);
+  const [selectedPokemonNo, setSelectedPokemonNo] = useState<number | null>(null);
 
-  const [loading, result] = useFetchPokemon();
+  const [loading, result]: any = useFetchPokemon();
 
   const debouncedInput = useDebounce(input, 1000);
 
-  const openModal = nationalNo => {
+  const openModal = (nationalNo: number) => {
     setSelectedPokemonNo(nationalNo);
     setModalOpen(true);
   };
@@ -78,7 +86,7 @@ const App = () => {
       return null;
     }
 
-    const filteredPokemon = result.filter(pokemon => {
+    const filteredPokemon = result.filter((pokemon: Pokemon) => {
       if (debouncedInput === "") return true;
       return (
         pokemon.name.match(new RegExp(debouncedInput, "gi")) ||
@@ -102,7 +110,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    const setModalOpenIfEscape = e => {
+    const setModalOpenIfEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape" && modalOpen) {
         closeModal();
       }
