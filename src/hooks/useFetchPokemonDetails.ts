@@ -3,7 +3,7 @@ import usePromise from "../util/usePromise";
 
 import db from "../db";
 
-const useFetchPokemonDetails = (id: number) => {
+const useFetchPokemonDetails = (id: number | null) => {
   const main = async () => {
     if (id) {
       const pokemonInDb = await db.table("pokemon").get(id);

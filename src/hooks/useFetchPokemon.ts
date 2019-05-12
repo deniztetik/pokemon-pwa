@@ -37,14 +37,14 @@ const useFetchPokemon = () => {
     });
 
   const main = async () => {
-    const pokemonInDb = await db.table("pokemon");
+    const pokemonDb = await db.table("pokemon");
 
-    if ((await pokemonInDb.count()) === 0) {
+    if ((await pokemonDb.count()) === 0) {
       let pokemen = await fetchPokemonList();
       pokemen = renameKeys(pokemen);
 
       // await db.pokemon.bulkAdd(pokemen);
-      await pokemonInDb.bulkAdd(pokemen);
+      await pokemonDb.bulkAdd(pokemen);
     }
 
     return await db.table("pokemon").toArray();

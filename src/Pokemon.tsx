@@ -7,7 +7,14 @@ import * as types from "styled-components/cssprop";
 
 import capitalize from "lodash/capitalize";
 
-const Pokemon = ({ name, sprite, id, ...props }: any) => (
+interface PokemonProps {
+  name: string;
+  sprite: string;
+  id: number;
+  [propName: string]: any;
+}
+
+const Pokemon = ({ name, sprite, id, ...props }: PokemonProps) => (
   <Box
     className="pokemon"
     css={`

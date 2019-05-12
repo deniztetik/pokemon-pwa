@@ -7,7 +7,7 @@ import capitalize from "lodash/capitalize";
 
 import useFetchPokemonDetails from "./hooks/useFetchPokemonDetails";
 
-const PokemonDetails = ({ nationalNo }: any) => {
+const PokemonDetails = ({ nationalNo }: { nationalNo: number | null }) => {
   const [loading, result]: any = useFetchPokemonDetails(nationalNo);
 
   return !loading ? (
