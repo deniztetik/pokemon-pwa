@@ -6,7 +6,12 @@ import db from "../db";
 
 const POKEMON_LIMIT = 807;
 
-const useFetchPokemon = () => {
+interface PokemonResult {
+  loading: boolean;
+  result: null | Pokemon[];
+}
+
+const useFetchPokemon = (): PokemonResult => {
   const buildFetchPokemonDetailsPromise = async (pokemonNo: number) => {
     const pokemonDetailsRes = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonNo}/`);
 
@@ -51,7 +56,7 @@ const useFetchPokemon = () => {
 
   const { loading, result } = usePromise(main);
 
-  return [loading, result];
+  return { loading, result };
 };
 
 export default useFetchPokemon;

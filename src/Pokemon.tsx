@@ -11,7 +11,7 @@ interface PokemonProps {
   name: string;
   sprite: string;
   id: number;
-  [propName: string]: any;
+  onClick: () => void;
 }
 
 const Pokemon = ({ name, sprite, id, ...props }: PokemonProps): JSX.Element => (

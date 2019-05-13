@@ -46,10 +46,10 @@ const customModalStyles = {
   },
 };
 
-type Pokemon = {
-  name: string;
-  nationalNo: number;
-};
+// interface Pokemon {
+//   name: string;
+//   nationalNo: number;
+// }
 
 const onAfterOpen = () => {
   window.document.getElementsByTagName("body")[0].style.overflow = "hidden";
@@ -66,7 +66,7 @@ const App = () => {
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPokemonNo, setSelectedPokemonNo] = useState<number | null>(null);
 
-  const [loading, result]: any = useFetchPokemon();
+  const { loading, result } = useFetchPokemon();
 
   const debouncedInput = useDebounce(input, 1000);
 
@@ -83,29 +83,29 @@ const App = () => {
   const renderPokemon = () => {
     if (!result) {
       return null;
-    }
+    } else {
+      const filteredPokemon = result.filter((pokemon: Pokemon) => {
+        if (debouncedInput === "") return true;
+        return (
+          pokemon.name.match(new RegExp(debouncedInput, "gi")) ||
+          pokemon.nationalNo === Number(debouncedInput)
+        );
+      });
 
-    const filteredPokemon = result.filter((pokemon: Pokemon) => {
-      if (debouncedInput === "") return true;
       return (
-        pokemon.name.match(new RegExp(debouncedInput, "gi")) ||
-        pokemon.nationalNo === Number(debouncedInput)
+        <InfiniteScroll items={filteredPokemon}>
+          {pokemon => (
+            <Pokemon
+              onClick={() => openModal(pokemon.id)}
+              key={pokemon.name}
+              name={pokemon.name}
+              sprite={pokemon.spriteUrl}
+              id={pokemon.id}
+            />
+          )}
+        </InfiniteScroll>
       );
-    });
-
-    return (
-      <InfiniteScroll items={filteredPokemon}>
-        {pokemon => (
-          <Pokemon
-            onClick={() => openModal(pokemon.id)}
-            key={pokemon.name}
-            name={pokemon.name}
-            sprite={pokemon.spriteUrl}
-            id={pokemon.id}
-          />
-        )}
-      </InfiniteScroll>
-    );
+    }
   };
 
   useEffect(() => {

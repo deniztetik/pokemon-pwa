@@ -9,10 +9,10 @@
   dependencies:
     react "^16.8.1"
 
-"@aslan-hooks/use-promise@^1.1.1":
-  version "1.1.1"
-  resolved "https://registry.yarnpkg.com/@aslan-hooks/use-promise/-/use-promise-1.1.1.tgz#fea95e8959ba89e89ce33c86423e888cf1940f8a"
-  integrity sha512-UKFmDXLM98fG6giHw4Qj4zmKpn/eCfDtbIBwuwM+1gOlXtKuXBHjcdupwZ3RpzQr/J19QoQdqu2oLFFfZNehRQ==
+"@aslan-hooks/use-promise@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@aslan-hooks/use-promise/-/use-promise-1.1.2.tgz#a13525afc76b47c59739acd3430a0986dedc4cd6"
+  integrity sha512-PNB8K1Stmhk2ztYu3QaDF5sxWpLTOvIgY0aiK7TawvepPJ576c3eJ9/wjCGpiR+z38/XwtTMQPPQnLJoAmlWbg==
   dependencies:
     react "^16.8.1"
 
