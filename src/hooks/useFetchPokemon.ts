@@ -1,5 +1,4 @@
-// import usePromise from "@aslan-hooks/use-promise";
-import usePromise from "../util/usePromise";
+import usePromise from "@aslan-hooks/use-promise";
 
 import range from "lodash/range";
 
@@ -50,7 +49,7 @@ const useFetchPokemon = () => {
     return await db.table("pokemon").toArray();
   };
 
-  const [loading, result] = usePromise(main);
+  const { loading, result } = usePromise(main);
 
   return [loading, result];
 };

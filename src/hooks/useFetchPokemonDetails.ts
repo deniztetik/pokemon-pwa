@@ -1,5 +1,4 @@
-// import usePromise from "@aslan-hooks/use-promise";
-import usePromise from "../util/usePromise";
+import usePromise from "@aslan-hooks/use-promise";
 
 import db from "../db";
 
@@ -12,7 +11,7 @@ const useFetchPokemonDetails = (id: number | null) => {
     return null;
   };
 
-  const [loading, result] = usePromise(main);
+  const { loading, result } = usePromise(main);
 
   return [loading, result];
 };

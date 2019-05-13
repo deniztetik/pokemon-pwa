@@ -14,8 +14,7 @@ import * as types from "styled-components/cssprop";
 import { Grommet, Box, TextInput, InfiniteScroll, Heading } from "grommet";
 import Modal from "react-modal";
 
-// import useDebounce from "@aslan-hooks/use-debounce";
-import useDebounce from "./util/useDebounce";
+import useDebounce from "@aslan-hooks/use-debounce";
 
 import Pokemon from "./Pokemon";
 import PokemonDetails from "./PokemonDetails";

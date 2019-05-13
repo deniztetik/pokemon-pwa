@@ -14,7 +14,7 @@ interface PokemonProps {
   [propName: string]: any;
 }
 
-const Pokemon = ({ name, sprite, id, ...props }: PokemonProps) => (
+const Pokemon = ({ name, sprite, id, ...props }: PokemonProps): JSX.Element => (
   <Box
     className="pokemon"
     css={`

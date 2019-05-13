@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@aslan-hooks/use-debounce": "^1.0.0",
-    "@aslan-hooks/use-promise": "^1.0.2",
+    "@aslan-hooks/use-debounce": "^1.1.1",
+    "@aslan-hooks/use-promise": "^1.1.1",
     "@types/jest": "^24.0.12",
     "@types/lodash": "^4.14.126",
     "@types/node": "^12.0.0",
