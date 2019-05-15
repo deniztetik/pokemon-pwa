@@ -46,11 +46,6 @@ const customModalStyles = {
   },
 };
 
-// interface Pokemon {
-//   name: string;
-//   nationalNo: number;
-// }
-
 const onAfterOpen = () => {
   window.document.getElementsByTagName("body")[0].style.overflow = "hidden";
 };
@@ -61,7 +56,7 @@ const onAfterClose = () => {
 
 Modal.setAppElement("#root");
 
-const App = () => {
+const App = (): JSX.Element => {
   const [input, setInput] = useState("");
   const [modalOpen, setModalOpen] = useState(false);
   const [selectedPokemonNo, setSelectedPokemonNo] = useState<number | null>(null);
@@ -80,7 +75,7 @@ const App = () => {
     setModalOpen(false);
   };
 
-  const renderPokemon = () => {
+  const renderPokemon = (): JSX.Element | null => {
     if (!result) {
       return null;
     } else {
@@ -128,27 +123,27 @@ const App = () => {
         {loading ? (
           <div>Loading</div>
         ) : (
-          <>
-            <Box width="small" css="margin: 20px">
-              <TextInput
-                css={`
+            <>
+              <Box width="small" css="margin: 20px">
+                <TextInput
+                  css={`
                   background: white;
                   opacity: 0.5;
                 `}
-                onChange={e => setInput(e.target.value)}
-              />
-            </Box>
-            <PokemonWrapper className="pokemon-wrapper">{renderPokemon()}</PokemonWrapper>
-            <Modal
-              isOpen={modalOpen}
-              onAfterOpen={onAfterOpen}
-              onAfterClose={onAfterClose}
-              style={customModalStyles}
-            >
-              <PokemonDetails nationalNo={selectedPokemonNo} />
-            </Modal>
-          </>
-        )}
+                  onChange={e => setInput(e.target.value)}
+                />
+              </Box>
+              <PokemonWrapper className="pokemon-wrapper">{renderPokemon()}</PokemonWrapper>
+              <Modal
+                isOpen={modalOpen}
+                onAfterOpen={onAfterOpen}
+                onAfterClose={onAfterClose}
+                style={customModalStyles}
+              >
+                <PokemonDetails nationalNo={selectedPokemonNo} />
+              </Modal>
+            </>
+          )}
       </Box>
     </Grommet>
   );

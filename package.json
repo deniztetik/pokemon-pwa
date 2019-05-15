@@ -10,6 +10,8 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.8.17",
     "@types/react-dom": "^16.8.4",
+    "@types/react-modal": "^3.8.2",
+    "@types/styled-components": "^4.1.15",
     "dexie": "^2.0.4",
     "grommet": "^2.4.0",
     "lodash": "^4.17.11",

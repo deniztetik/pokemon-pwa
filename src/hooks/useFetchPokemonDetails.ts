@@ -2,7 +2,12 @@ import usePromise from "@aslan-hooks/use-promise";
 
 import db from "../db";
 
-const useFetchPokemonDetails = (id: number | null) => {
+interface PokemonDetailResult {
+  loading: boolean;
+  result: null | PokemonDetail;
+}
+
+const useFetchPokemonDetails = (id: number | null): PokemonDetailResult => {
   const main = async () => {
     if (id) {
       const pokemonInDb = await db.table("pokemon").get(id);
@@ -13,7 +18,7 @@ const useFetchPokemonDetails = (id: number | null) => {
 
   const { loading, result } = usePromise(main);
 
-  return [loading, result];
+  return { loading, result };
 };
 
 export default useFetchPokemonDetails;

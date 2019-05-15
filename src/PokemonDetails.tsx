@@ -8,9 +8,9 @@ import capitalize from "lodash/capitalize";
 import useFetchPokemonDetails from "./hooks/useFetchPokemonDetails";
 
 const PokemonDetails = ({ nationalNo }: { nationalNo: number | null }): JSX.Element | null => {
-  const [loading, result]: any = useFetchPokemonDetails(nationalNo);
+  const { loading, result } = useFetchPokemonDetails(nationalNo);
 
-  return !loading ? (
+  return !loading && result ? (
     <div
       css={`
         display: grid;
