@@ -2,10 +2,10 @@ import usePromise from "@aslan-hooks/use-promise";
 
 import db from "../db";
 
-interface PokemonDetailResult {
+type PokemonDetailResult = {
   loading: boolean;
   result: null | PokemonDetail;
-}
+};
 
 const useFetchPokemonDetails = (id: number | null): PokemonDetailResult => {
   const main = async () => {

@@ -76,31 +76,32 @@ const App = (): JSX.Element => {
   };
 
   const renderPokemon = (): JSX.Element | null => {
+    let filteredPokemon = result;
     if (!result) {
       return null;
-    } else {
-      const filteredPokemon = result.filter((pokemon: Pokemon) => {
-        if (debouncedInput === "") return true;
+    }
+    if (debouncedInput !== "") {
+      filteredPokemon = result.filter((pokemon: Pokemon) => {
         return (
           pokemon.name.match(new RegExp(debouncedInput, "gi")) ||
           pokemon.nationalNo === Number(debouncedInput)
         );
       });
-
-      return (
-        <InfiniteScroll items={filteredPokemon}>
-          {pokemon => (
-            <Pokemon
-              onClick={() => openModal(pokemon.id)}
-              key={pokemon.name}
-              name={pokemon.name}
-              sprite={pokemon.spriteUrl}
-              id={pokemon.id}
-            />
-          )}
-        </InfiniteScroll>
-      );
     }
+
+    return (
+      <InfiniteScroll items={filteredPokemon as any[]}>
+        {pokemon => (
+          <Pokemon
+            onClick={() => openModal(pokemon.id)}
+            key={pokemon.name}
+            name={pokemon.name}
+            sprite={pokemon.spriteUrl}
+            id={pokemon.id}
+          />
+        )}
+      </InfiniteScroll>
+    );
   };
 
   useEffect(() => {
@@ -123,27 +124,27 @@ const App = (): JSX.Element => {
         {loading ? (
           <div>Loading</div>
         ) : (
-            <>
-              <Box width="small" css="margin: 20px">
-                <TextInput
-                  css={`
+          <>
+            <Box width="small" css="margin: 20px">
+              <TextInput
+                css={`
                   background: white;
                   opacity: 0.5;
                 `}
-                  onChange={e => setInput(e.target.value)}
-                />
-              </Box>
-              <PokemonWrapper className="pokemon-wrapper">{renderPokemon()}</PokemonWrapper>
-              <Modal
-                isOpen={modalOpen}
-                onAfterOpen={onAfterOpen}
-                onAfterClose={onAfterClose}
-                style={customModalStyles}
-              >
-                <PokemonDetails nationalNo={selectedPokemonNo} />
-              </Modal>
-            </>
-          )}
+                onChange={e => setInput(e.target.value)}
+              />
+            </Box>
+            <PokemonWrapper className="pokemon-wrapper">{renderPokemon()}</PokemonWrapper>
+            <Modal
+              isOpen={modalOpen}
+              onAfterOpen={onAfterOpen}
+              onAfterClose={onAfterClose}
+              style={customModalStyles}
+            >
+              <PokemonDetails nationalNo={selectedPokemonNo} />
+            </Modal>
+          </>
+        )}
       </Box>
     </Grommet>
   );

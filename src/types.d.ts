@@ -1,10 +1,10 @@
-interface Pokemon {
+type Pokemon = {
   name: string;
   nationalNo: number;
-}
+};
 
-interface PokemonDetail {
+type PokemonDetail = {
   spriteUrl: string;
   name: string;
   nationalNo: number;
-}
+};

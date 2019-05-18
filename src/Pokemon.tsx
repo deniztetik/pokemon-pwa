@@ -7,14 +7,19 @@ import * as types from "styled-components/cssprop";
 
 import capitalize from "lodash/capitalize";
 
-interface PokemonProps {
+type Props = PassthroughProps & OwnProps;
+
+type PassthroughProps = {
+  onClick: () => void;
+};
+
+type OwnProps = {
   name: string;
   sprite: string;
   id: number;
-  onClick: () => void;
-}
+};
 
-const Pokemon = ({ name, sprite, id, ...props }: PokemonProps): JSX.Element => (
+const Pokemon = ({ name, sprite, id, ...props }: Props): JSX.Element => (
   <Box
     className="pokemon"
     css={`

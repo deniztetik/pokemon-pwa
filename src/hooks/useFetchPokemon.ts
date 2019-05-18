@@ -6,10 +6,10 @@ import db from "../db";
 
 const POKEMON_LIMIT = 807;
 
-interface PokemonResult {
+type PokemonResult = {
   loading: boolean;
   result: null | Pokemon[];
-}
+};
 
 const useFetchPokemon = (): PokemonResult => {
   const buildFetchPokemonDetailsPromise = async (pokemonNo: number) => {
