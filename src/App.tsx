@@ -21,6 +21,8 @@ import PokemonDetails from "./PokemonDetails";
 
 import useFetchPokemon from "./hooks/useFetchPokemon";
 
+import "./App.scss";
+
 const PokemonWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
@@ -125,7 +127,7 @@ const App = (): JSX.Element => {
           <div>Loading</div>
         ) : (
           <>
-            <Box width="small" css="margin: 20px">
+            <Box className="input-box" width="small" css="margin: 20px">
               <TextInput
                 css={`
                   background: white;
