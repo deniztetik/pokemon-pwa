@@ -39,11 +39,11 @@
       left: -5px;
     }
     
-    &:focus-within::after {
+    &::after {
       @include rings(3s, 0s);
     }
     
-    &:focus-within::before {
+    &::before {
       @include rings(3s, 0.5s);
     }
   }
