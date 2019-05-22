@@ -14,6 +14,7 @@
     "@types/styled-components": "^4.1.15",
     "dexie": "^2.0.4",
     "grommet": "^2.4.0",
+    "grommet-icons": "^4.2.0",
     "lodash": "^4.17.11",
     "polished": "^3.0.0",
     "react": "^16.8.1",

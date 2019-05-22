@@ -141,7 +141,7 @@ const App = (): JSX.Element => {
               onAfterClose={onAfterClose}
               style={customModalStyles}
             >
-              <PokemonDetails nationalNo={selectedPokemonNo} />
+              <PokemonDetails nationalNo={selectedPokemonNo} closeModal={closeModal} />
             </Modal>
           </>
         )}
