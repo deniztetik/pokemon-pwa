@@ -10,9 +10,13 @@ import capitalize from "lodash/capitalize";
 
 import useFetchPokemonDetails from "./hooks/useFetchPokemonDetails";
 
-const PokemonDetails = ({ nationalNo, closeModal }: { nationalNo: number | null, closeModal: () => void }): JSX.Element | null => {
+type OwnProps = {
+  nationalNo: number | null;
+  closeModal: () => void;
+}
+
+const PokemonDetails = ({ nationalNo, closeModal }: OwnProps): JSX.Element | null => {
   const { loading, result } = useFetchPokemonDetails(nationalNo);
-``
   return !loading && result ? (
     <div
       css={`
