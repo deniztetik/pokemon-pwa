@@ -16,7 +16,7 @@
     "dexie": "^2.0.4",
     "grommet": "^2.4.0",
     "grommet-icons": "^4.2.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.13",
     "node-sass": "^4.12.0",
     "polished": "^3.0.0",
     "react": "^16.8.1",
